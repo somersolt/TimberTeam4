@@ -15,5 +15,7 @@ public:
 	void Reset() override;
 
 	void SetScore(int score);
+
+	void AddScore(int addedScore);
 };
 

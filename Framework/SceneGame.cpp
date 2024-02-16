@@ -163,6 +163,8 @@ void SCENE_GAME::UpdateGame(float dt)
 		return;
 	}
 
+	uiScore->AddScore(10);
+
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
 	{
@@ -185,6 +187,7 @@ void SCENE_GAME::UpdateGameOver(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
+		uiScore->Reset();
 	}
 }
 
