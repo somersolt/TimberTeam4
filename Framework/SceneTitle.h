@@ -1,12 +1,12 @@
 #pragma once
 
-class SCENE_DEV2 : public Scene
+class SCENE_TITLE : public Scene
 {
 protected:
 
 public:
-	SCENE_DEV2(SceneIds id);
-	virtual ~SCENE_DEV2();
+	SCENE_TITLE(SceneIds id);
+	virtual ~SCENE_TITLE();
 
 	void Init() override;
 	void Release() override;
@@ -15,6 +15,5 @@ public:
 	void Exit() override;
 
 	void Update(float dt) override;
-
 };
 

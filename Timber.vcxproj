@@ -156,8 +156,8 @@
     </ClCompile>
     <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
-    <ClCompile Include="Framework\SceneDev1.cpp" />
-    <ClCompile Include="Framework\SceneDev2.cpp" />
+    <ClCompile Include="Framework\SceneTitle.cpp" />
+    <ClCompile Include="Framework\SceneModSelect.cpp" />
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\SceneGame.cpp" />
     <ClCompile Include="Framework\TextGo.cpp" />
@@ -181,8 +181,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
-    <ClInclude Include="Framework\SceneDev1.h" />
-    <ClInclude Include="Framework\SceneDev2.h" />
+    <ClInclude Include="Framework\SceneTitle.h" />
+    <ClInclude Include="Framework\SceneModSelect.h" />
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\SceneGame.h" />
     <ClInclude Include="Framework\TextGo.h" />
