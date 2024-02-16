@@ -1,31 +1,39 @@
 #pragma once
 #include "GameObject.h"
-class UiTimeBar : public GameObject
+class UiTimeBar :
+	public GameObject
 {
 protected:
-	sf::RectangleShape shape;
 
-	sf::Vector2f maxSize;
-	sf::Vector2f currentSize;
 
 public:
-	UiTimeBar(const std::string& name);
-	virtual ~UiTimeBar() = default;
+	UiTimeBar(const std::string& name = "");
 
 	void Reset() override;
 
-	void SetPosition(const sf::Vector2f& pos) override;
+	void SetValue(float value);
+
+	void Update(float dt) override;
+
+	void AddTime(float addedTime); //매개변수로 조절가능하게
+
+	void SetPosition(const sf::Vector2f pos);
+
 	void SetOrigin(Origins preset) override;
+
 	void SetOrigin(const sf::Vector2f& newOrigin) override;
-	void SetScale(const sf::Vector2f& scale) override;
-	void SetFlipX(bool filp) override;
-	void SetFlipY(bool filp) override;
+
+
+	void SetSize(const sf::Vector2f size);
 
 	void Draw(sf::RenderWindow& window) override;
 
-	void Set(const sf::Vector2f& max, const sf::Color& color);
+	void SetColor(sf::Color color);
 
-	float GetValue() const { return currentSize.x / maxSize.x; }
-	void SetValue(float value);
+	sf::RectangleShape timeBar;
+	sf::Vector2f timeBarSize;
+	sf::Vector2f timeBarCurrSize;
+	float timeBarDuration;
+	float timeBarSpeed = -timeBarSize.x / timeBarDuration;
 };
 

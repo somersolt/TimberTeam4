@@ -75,12 +75,21 @@ void SCENE_GAME::Init()
 	uiScore->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
 	AddGo(uiScore);
 
-	uiTimeBar = new UiTimeBar("TimeBar");
-	uiTimeBar->Set({ 400, 80 }, sf::Color::Red);
-	uiTimeBar->SetOrigin(Origins::ML);
-	uiTimeBar->SetPosition(uiTimeBarPos);
 
-	AddGo(uiTimeBar);
+
+	sf::Vector2f timeSize(400.f, 80.f);
+	float timeBarDuration = 3.f;
+
+	timeBar = new UiTimeBar("Time Bar");
+	timeBar->timeBarSize = timeSize;
+	timeBar->Reset();
+	timeBar->timeBarSpeed = -timeSize.x / timeBarDuration;
+	timeBar->SetOrigin(Origins::ML);
+	timeBar->SetPosition({ 1920 / 2 - 200, 1080 - 100 });
+	timeBar->SetColor(sf::Color::Red);
+	timeBar->SetValue(timeBar->timeBarCurrSize.x);
+
+	AddGo(timeBar);
 
 	uiMsg = new TextGo("Center Message");
 	uiMsg->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"),
@@ -152,18 +161,7 @@ void SCENE_GAME::UpdateGame(float dt)
 	{
 		SetStatus(Status::Pause);
 	}
-
-	timer -= dt;
-	uiTimeBar->SetValue(timer / duration);
-	if (uiTimeBar->GetValue() <= 0.f)
-	{
-		SetStatus(Status::GameOver);
-		player->OnDie();
-		sfxTimeOver.play();
-		return;
-	}
-
-	uiScore->AddScore(10);
+	timeBar->AddTime(50);
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
@@ -180,6 +178,7 @@ void SCENE_GAME::UpdateGame(float dt)
 			++it;
 		}
 	}
+	
 }
 
 void SCENE_GAME::UpdateGameOver(float dt)
@@ -189,6 +188,7 @@ void SCENE_GAME::UpdateGameOver(float dt)
 		SetStatus(Status::Game);
 		uiScore->Reset();
 	}
+	
 }
 
 void SCENE_GAME::UpdatePause(float dt)
@@ -208,6 +208,7 @@ void SCENE_GAME::Draw(sf::RenderWindow& window)
 void SCENE_GAME::OnChop()
 {
 	// 점수 갱신
+	uiScore->AddScore(10);
 }
 
 void SCENE_GAME::OnPlayerDie()
@@ -224,7 +225,7 @@ void SCENE_GAME::SetStatus(Status newStatus)
 	{
 	case Status::Awake:
 		timer = duration;
-		uiTimeBar->SetValue(timer / duration);
+		timeBar->SetValue(timer / duration);
 		FRAMEWORK.SetTimeScale(0.f);
 		uiMsg->SetActive(true);
 		uiMsg->SetString("PRESS ENTER TO START!");
@@ -233,7 +234,7 @@ void SCENE_GAME::SetStatus(Status newStatus)
 		if (prevStatus == Status::GameOver)
 		{
 			timer = duration;
-			uiTimeBar->SetValue(timer / duration);
+			timeBar->SetValue(timer / duration);
 			player->Reset();
 			tree->Reset();
 		}
