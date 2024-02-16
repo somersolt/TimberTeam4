@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "SceneGame.h"
+#include "SceneBattle.h"
 #include "Tree.h"
 
 Player::Player(const std::string& name)
@@ -118,16 +119,32 @@ void Player::Reset()
 	isAlive = true;
 	isChopping = false;
 
-	sceneGame = dynamic_cast<SCENE_GAME*>(SCENE_MGR.GetCurrentScene());
-	tree = dynamic_cast<Tree*>(sceneGame->FindGo("Tree"));
+
+	sceneBattle = dynamic_cast<SCENE_BATTLE*>(SCENE_MGR.GetCurrentScene());
+	tree = dynamic_cast<Tree*>(sceneBattle->FindGo("Tree"));
+
+
+	//if (sceneGame)
+	//{
+	//	sceneGame = dynamic_cast<SCENE_GAME*>(SCENE_MGR.GetCurrentScene());
+	//	tree = dynamic_cast<Tree*>(sceneGame->FindGo("Tree"));
+	//}
+	//else if (sceneBattle)
+	//{
+	//	
+	//}
+
 
 	SetSide(Sides::RIGHT);
 }
 
 void Player::Update(float dt)
 {
-	if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
+	if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::Game)
 		return;
+
+	//if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
+	//	return;
 
 	Sides inputSide = Sides::NONE;
 
@@ -146,16 +163,22 @@ void Player::Update(float dt)
 		sfxChop.play();
 
 		Sides branchSide = tree->Chop(inputSide);
-		sceneGame->PlayEffectLog(inputSide);
+
+
+		sceneBattle->PlayEffectLog(inputSide);
+		//sceneGame->PlayEffectLog(inputSide);
+		
 		SetSide(inputSide);
 
 		if (side != branchSide)
 		{
-			sceneGame->OnChop();
+			sceneBattle->OnChop();
+			//sceneGame->OnChop();
 		}
 		else
 		{
-			sceneGame->OnPlayerDie();
+			sceneBattle->OnPlayerDie();
+			//sceneGame->OnPlayerDie();
 			OnDie();
 			sfxDeath.play();
 		}

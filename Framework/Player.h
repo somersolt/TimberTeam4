@@ -2,6 +2,7 @@
 #include "SpriteGo.h"
 
 class SCENE_GAME;
+class SCENE_BATTLE;
 class Tree;
 
 class Player : public SpriteGo
@@ -22,6 +23,7 @@ protected:
 	bool isChopping = true;
 
 	SCENE_GAME* sceneGame;
+	SCENE_BATTLE* sceneBattle;
 	Tree* tree;
 
 public:
@@ -29,6 +31,8 @@ public:
 	virtual ~Player() = default;
 
 	std::string texIdPlayer = "graphics/player.png";
+	std::string texIdPlayer2 = "graphics/player2.png";
+
 	std::string texIdAxe = "graphics/axe.png";
 	std::string texIdRip = "graphics/rip.png";
 	

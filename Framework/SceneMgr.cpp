@@ -3,6 +3,8 @@
 #include "SceneDev1.h"
 #include "SceneDev2.h"
 #include "SceneGame.h"
+#include "SceneBattle.h"
+
 
 SceneMgr::~SceneMgr()
 {
@@ -16,6 +18,7 @@ void SceneMgr::Init()
 	scenes.push_back(new SCENE_DEV1(SceneIds::SCENE_DEV1));
 	scenes.push_back(new SCENE_DEV2(SceneIds::SCENE_DEV2));
 	scenes.push_back(new SCENE_GAME(SceneIds::SCENE_GAME));
+	scenes.push_back(new SCENE_BATTLE(SceneIds::SCENE_BATTLE));
 
 	for (auto scene : scenes)
 	{
