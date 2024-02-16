@@ -30,7 +30,7 @@ void SCENE_GAME::Init()
 	texResMgr.Load("graphics/axe.png");
 	texResMgr.Load("graphics/rip.png");
 
-	fontResMgr.Load("fonts/KOMIKAP_.ttf");
+	//fontResMgr.Load("fonts/KOMIKAP_.ttf");
 
 	soundResMgr.Load("sound/out_of_time.wav");
 	sfxTimeOver.setBuffer(RES_MGR_SOUND_BUFFER.Get("sound/out_of_time.wav"));
