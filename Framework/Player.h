@@ -40,6 +40,7 @@ public:
 	Sides GetSide() const { return side; }
 	void SetSide(Sides s);
 	void OnDie();
+	void MultiInput();
 
 	virtual void SetPosition(const sf::Vector2f& pos);
 	virtual void SetScale(const sf::Vector2f& scale);
@@ -48,6 +49,7 @@ public:
 	virtual void Release();
 
 	virtual void Reset();
+
 
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);

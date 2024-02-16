@@ -64,8 +64,8 @@ void SCENE_BATTLE::Init()
 	player = new Player("Player");
 	AddGo(player);
 
-	//player2 = new Player("Player2");
-	//AddGo(player2);
+	player2 = new Player("Player2");
+	AddGo(player2);
 
 	BgBeeGo* beeGo = new BgBeeGo("Bee");
 	beeGo->SetTexture(texResMgr.Get("graphics/bee.png"));
@@ -123,6 +123,7 @@ void SCENE_BATTLE::Release()
 void SCENE_BATTLE::Enter()
 {
 	player->SetPosition(tree->GetPosition());
+	player2->SetPosition(tree2->GetPosition());
 
 	Scene::Enter();
 
@@ -246,6 +247,8 @@ void SCENE_BATTLE::SetStatus(Status newStatus)
 			timeBar->SetValue(timer / duration);
 			player->Reset();
 			tree->Reset();
+			player2->Reset();
+			tree2->Reset();
 		}
 		FRAMEWORK.SetTimeScale(1.f);
 		uiMsg->SetActive(false);

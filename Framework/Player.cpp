@@ -115,7 +115,7 @@ void Player::Reset()
 {
 	SpriteGo::Reset();
 
-	SetTexture(texIdPlayer);
+	SetTexture(texIdPlayer); 
 	isAlive = true;
 	isChopping = false;
 
@@ -133,9 +133,60 @@ void Player::Reset()
 	//{
 	//	
 	//}
-
+	
 
 	SetSide(Sides::RIGHT);
+}
+
+void Player::MultiInput()
+{
+	Sides inputSide = Sides::NONE;
+
+	if (sceneBattle->GetStatus() == SCENE_BATTLE::Status::Game)
+	{
+		if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+		{
+			inputSide = Sides::LEFT;
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+		{
+			inputSide = Sides::RIGHT;
+		}
+
+		if (inputSide != Sides::NONE)
+		{
+			isChopping = true;
+			sfxChop.play();
+
+			Sides branchSide = tree->Chop(inputSide);
+
+
+			sceneBattle->PlayEffectLog(inputSide);
+			//sceneGame->PlayEffectLog(inputSide);
+
+			SetSide(inputSide);
+
+			if (side != branchSide)
+			{
+				sceneBattle->OnChop();
+				//sceneGame->OnChop();
+			}
+			else
+			{
+				sceneBattle->OnPlayerDie();
+				//sceneGame->OnPlayerDie();
+				OnDie();
+				sfxDeath.play();
+			}
+		}
+	}
+
+
+
+	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Left))
+	{
+		isChopping = false;
+	}
 }
 
 void Player::Update(float dt)
@@ -146,48 +197,8 @@ void Player::Update(float dt)
 	//if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
 	//	return;
 
-	Sides inputSide = Sides::NONE;
+	MultiInput();
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
-	{
-		inputSide = Sides::LEFT;
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
-	{
-		inputSide = Sides::RIGHT;
-	}
-
-	if (inputSide != Sides::NONE)
-	{
-		isChopping = true;
-		sfxChop.play();
-
-		Sides branchSide = tree->Chop(inputSide);
-
-
-		sceneBattle->PlayEffectLog(inputSide);
-		//sceneGame->PlayEffectLog(inputSide);
-		
-		SetSide(inputSide);
-
-		if (side != branchSide)
-		{
-			sceneBattle->OnChop();
-			//sceneGame->OnChop();
-		}
-		else
-		{
-			sceneBattle->OnPlayerDie();
-			//sceneGame->OnPlayerDie();
-			OnDie();
-			sfxDeath.play();
-		}
-	}
-
-	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Left))
-	{
-		isChopping = false;
-	}
 }
 
 void Player::Draw(sf::RenderWindow& window)
