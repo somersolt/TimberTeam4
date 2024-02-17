@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Player.h"
 #include "SceneGame.h"
-#include "SceneBattle.h"
 #include "Tree.h"
 
 Player::Player(const std::string& name)
@@ -120,19 +119,8 @@ void Player::Reset()
 	isChopping = false;
 
 
-	sceneBattle = dynamic_cast<SCENE_BATTLE*>(SCENE_MGR.GetCurrentScene());
-	tree = dynamic_cast<Tree*>(sceneBattle->FindGo("Tree"));
-
-
-	//if (sceneGame)
-	//{
-	//	sceneGame = dynamic_cast<SCENE_GAME*>(SCENE_MGR.GetCurrentScene());
-	//	tree = dynamic_cast<Tree*>(sceneGame->FindGo("Tree"));
-	//}
-	//else if (sceneBattle)
-	//{
-	//	
-	//}
+	sceneGame = dynamic_cast<SCENE_GAME*>(SCENE_MGR.GetCurrentScene());
+	tree = dynamic_cast<Tree*>(sceneGame->FindGo("Tree"));
 	
 
 	SetSide(Sides::RIGHT);
@@ -142,7 +130,7 @@ void Player::MultiInput()
 {
 	Sides inputSide = Sides::NONE;
 
-	if (sceneBattle->GetStatus() == SCENE_BATTLE::Status::Game)
+	if (sceneGame->GetStatus() == SCENE_GAME::Status::Game)
 	{
 		if (InputMgr::GetKeyDown(sf::Keyboard::Left))
 		{
@@ -166,20 +154,17 @@ void Player::MultiInput()
 
 			if (side != branchSide)
 			{
-				sceneBattle->OnChop();
-				//sceneGame->OnChop();
+				sceneGame->OnChop();
 			}
 			else
 			{
-				sceneBattle->OnPlayerDie();
-				//sceneGame->OnPlayerDie();
+				sceneGame->OnPlayerDie();
 				OnDie();
 				sfxDeath.play();
 			}
-			if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::GameOver)
+			if (sceneGame->GetStatus() != SCENE_GAME::Status::GameOver)
 			{
-				sceneBattle->PlayEffectLog(inputSide);
-				//sceneGame->PlayEffectLog(inputSide);
+				sceneGame->PlayEffectLog(inputSide);
 			}
 		}
 	}
@@ -194,11 +179,9 @@ void Player::MultiInput()
 
 void Player::Update(float dt)
 {
-	if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::Game)
-		return;
 
-	//if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
-	//	return;
+	if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
+		return;
 
 	MultiInput();
 

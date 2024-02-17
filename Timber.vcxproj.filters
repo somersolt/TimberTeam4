@@ -81,6 +81,12 @@
     <ClCompile Include="SceneBattle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Player1p.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2p.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Defines.h">
@@ -153,6 +159,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SceneBattle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1p.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player2p.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
