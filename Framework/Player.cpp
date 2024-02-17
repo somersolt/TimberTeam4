@@ -161,8 +161,6 @@ void Player::MultiInput()
 			Sides branchSide = tree->Chop(inputSide);
 
 
-			sceneBattle->PlayEffectLog(inputSide);
-			//sceneGame->PlayEffectLog(inputSide);
 
 			SetSide(inputSide);
 
@@ -178,12 +176,17 @@ void Player::MultiInput()
 				OnDie();
 				sfxDeath.play();
 			}
+			if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::GameOver)
+			{
+				sceneBattle->PlayEffectLog(inputSide);
+				//sceneGame->PlayEffectLog(inputSide);
+			}
 		}
 	}
 
 
 
-	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Left))
+	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Right))
 	{
 		isChopping = false;
 	}
