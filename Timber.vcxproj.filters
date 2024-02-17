@@ -78,6 +78,13 @@
     <ClCompile Include="Framework\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+        <ClCompile Include="SceneBattle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player1p.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2p.cpp">
     <ClCompile Include="Framework\SceneCharacterSelect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -152,6 +159,13 @@
     <ClInclude Include="Framework\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+        <ClInclude Include="SceneBattle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1p.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player2p.h">
     <ClInclude Include="Framework\SceneCharacterSelect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

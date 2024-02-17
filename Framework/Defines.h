@@ -14,7 +14,7 @@ enum class Sides
 
 enum class SceneIds
 {
-	NONE = -1, SCENE_DEV1, SCENE_DEV2, SCENE_GAME, COUNT,
+	NONE = -1, SCENE_DEV1, SCENE_DEV2, SCENE_GAME, SCENE_BATTLE, COUNT,
 };
 
 enum class Modes

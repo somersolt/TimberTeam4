@@ -15,7 +15,10 @@ public:
 	void Reset() override;
 
 	void SetScore(int score);
+	int GetScore() { return score; };
 
 	void AddScore(int addedScore);
+	void AddScore2(int addedScore);
+
 };
 

@@ -4,6 +4,8 @@
 #include "SceneDev2.h"
 #include "SceneCharacterSelect.h"
 #include "SceneGame.h"
+#include "SceneBattle.h"
+
 
 SceneMgr::~SceneMgr()
 {
@@ -17,6 +19,7 @@ void SceneMgr::Init()
 	scenes.push_back(new SCENE_TITLE(SceneIds::SCENE_TITLE));
 	scenes.push_back(new SCENE_MOD_SELECT(SceneIds::SCENE_MOD_SELECT));
 	scenes.push_back(new SCENE_GAME(SceneIds::SCENE_GAME));
+	scenes.push_back(new SCENE_BATTLE(SceneIds::SCENE_BATTLE));
 
 	for (auto scene : scenes)
 	{

@@ -165,6 +165,9 @@
     <ClCompile Include="Framework\Tree.cpp" />
     <ClCompile Include="Framework\UiScore.cpp" />
     <ClCompile Include="Framework\UiTimeBar.cpp" />
+    <ClCompile Include="Player1p.cpp" />
+    <ClCompile Include="Player2p.cpp" />
+    <ClCompile Include="SceneBattle.cpp" />
     <ClCompile Include="Framework\SceneCharacterSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +194,9 @@
     <ClInclude Include="Framework\Tree.h" />
     <ClInclude Include="Framework\UiScore.h" />
     <ClInclude Include="Framework\UiTimeBar.h" />
+    <ClInclude Include="Player1p.h" />
+    <ClInclude Include="Player2p.h" />
+    <ClInclude Include="SceneBattle.h" />
     <ClInclude Include="Framework\SceneCharacterSelect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
