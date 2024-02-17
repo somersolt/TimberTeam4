@@ -34,6 +34,9 @@ protected:
 	std::list<EffectLog*> useEffectList;
 	std::list<EffectLog*> unuseEffectList;
 
+	//std::list<EffectLog*> useEffectList2;
+	//std::list<EffectLog*> unuseEffectList2;
+
 	Status currStatus;
 
 	float duration = 3.f;
@@ -47,7 +50,8 @@ public:
 
 	void SetStatus(Status newStatus);
 	Status GetStatus() const { return currStatus; }
-	void PlayEffectLog(Sides side);
+	void PlayEffectLog1(Sides side);
+	void PlayEffectLog2(Sides side);
 
 	void Init() override;
 	void Release() override;

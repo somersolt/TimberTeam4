@@ -281,34 +281,66 @@ void SCENE_BATTLE::SetStatus(Status newStatus)
 	}
 }
 
-void SCENE_BATTLE::PlayEffectLog(Sides side)
+
+
+void SCENE_BATTLE::PlayEffectLog1(Sides side)
 {
-	EffectLog* effectLog = nullptr;
+	EffectLog* effectLog1 = nullptr;
 	if (unuseEffectList.empty())
 	{
-		effectLog = new EffectLog();
-		effectLog->SetTexture("graphics/log.png");
-		effectLog->SetOrigin(Origins::BC);
-		effectLog->Init();
+		effectLog1 = new EffectLog();
+		effectLog1->SetTexture("graphics/log.png");
+		effectLog1->SetOrigin(Origins::BC);
+		effectLog1->Init();
 	}
 	else
 	{
-		effectLog = unuseEffectList.front();
+		effectLog1 = unuseEffectList.front();
 		unuseEffectList.pop_front();
 	}
 
-	effectLog->SetActive(true);
-	effectLog->Reset();
-	effectLog->SetPosition(tree1->GetPosition());
-	effectLog->SetPosition(tree2->GetPosition());
+	effectLog1->SetActive(true);
+	effectLog1->Reset();
+	effectLog1->SetPosition(tree1->GetPosition());
 
 	sf::Vector2f velocity(1000.f, -1000.f);
 	if (side == Sides::RIGHT)
 	{
 		velocity.x *= -1.f;
 	}
-	effectLog->Fire(velocity);
+	effectLog1->Fire(velocity);
 
-	useEffectList.push_back(effectLog);
-	AddGo(effectLog);
+	useEffectList.push_back(effectLog1);
+	AddGo(effectLog1);
+}
+
+void SCENE_BATTLE::PlayEffectLog2(Sides side)
+{
+	EffectLog* effectLog2 = nullptr;
+	if (unuseEffectList.empty())
+	{
+		effectLog2 = new EffectLog();
+		effectLog2->SetTexture("graphics/log.png");
+		effectLog2->SetOrigin(Origins::BC);
+		effectLog2->Init();
+	}
+	else
+	{
+		effectLog2 = unuseEffectList.front();
+		unuseEffectList.pop_front();
+	}
+
+	effectLog2->SetActive(true);
+	effectLog2->Reset();
+	effectLog2->SetPosition(tree2->GetPosition());
+
+	sf::Vector2f velocity(1000.f, -1000.f);
+	if (side == Sides::RIGHT)
+	{
+		velocity.x *= -1.f;
+	}
+	effectLog2->Fire(velocity);
+
+	useEffectList.push_back(effectLog2);
+	AddGo(effectLog2);
 }

@@ -4,7 +4,7 @@
 class EffectLog : public SpriteGo
 {
 protected:
-	sf::Vector2f gravity = { 0.f, 1000.f };
+	sf::Vector2f gravity = { 0.f, 5000.f };
 	sf::Vector2f velocity;
 
 public:

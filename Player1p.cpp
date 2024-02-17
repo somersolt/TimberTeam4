@@ -81,7 +81,7 @@ void Player1p::Update(float dt)
 		}
 		if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::GameOver)
 		{
-			sceneBattle->PlayEffectLog(inputSide);
+			sceneBattle->PlayEffectLog1(inputSide);
 		}
 	}
 
