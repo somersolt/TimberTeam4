@@ -46,7 +46,7 @@ void Player1p::Reset()
 
 void Player1p::Update(float dt)
 {
-	if (!isAlive)
+	if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::Game)
 		return;
 
 	Sides inputSide = Sides::NONE;
