@@ -46,7 +46,7 @@ void Player1p::Reset()
 
 void Player1p::Update(float dt)
 {
-	if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::Game)
+	if (!isAlive)
 		return;
 
 	Sides inputSide = Sides::NONE;
@@ -73,13 +73,14 @@ void Player1p::Update(float dt)
 		{
 			sceneBattle->OnChop();
 		}
-		else
+		else //나뭇가지 방향과 플레이어 방향이 일치할때(죽어야할때)
 		{
-			sceneBattle->OnPlayerDie();
+			//sceneBattle->OnPlayerDie(); //게임오버 호출(두명이면 문제)
 			OnDie();
 			sfxDeath.play();
+			
 		}
-		if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::GameOver)
+		if (isAlive)
 		{
 			sceneBattle->PlayEffectLog1(inputSide);
 		}

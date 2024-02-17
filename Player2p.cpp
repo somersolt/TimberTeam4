@@ -46,7 +46,7 @@ void Player2p::Reset()
 
 void Player2p::Update(float dt)
 {
-	if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::Game)
+	if (!isAlive)
 		return;
 
 	Sides inputSide = Sides::NONE;
@@ -75,11 +75,11 @@ void Player2p::Update(float dt)
 		}
 		else
 		{
-			sceneBattle->OnPlayerDie();
+			//sceneBattle->OnPlayerDie();
 			OnDie();
 			sfxDeath.play();
 		}
-		if (sceneBattle->GetStatus() != SCENE_BATTLE::Status::GameOver)
+		if (isAlive)
 		{
 			sceneBattle->PlayEffectLog2(inputSide);
 		}

@@ -24,6 +24,7 @@ protected:
 	UiScore* uiScore1 = nullptr;
 	UiScore* uiScore2 = nullptr;
 	TextGo* uiMsg = nullptr;
+	TextGo* uiWinner = nullptr;
 	UiTimeBar* timeBar = nullptr;
 
 	Tree* tree1 = nullptr;
@@ -69,6 +70,8 @@ public:
 
 	void OnChop();
 	void OnPlayerDie();
+
+	void WinnerCheck();
 
 };
 

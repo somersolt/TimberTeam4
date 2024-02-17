@@ -83,11 +83,11 @@ void SCENE_BATTLE::Init()
 	uiTimeBarPos.y *= 0.9f;
 
 	// UI OBJECTS
-	uiScore1 = new UiScore("Ui Score");
+	uiScore1 = new UiScore("Ui Score1");
 	uiScore1->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
 	AddGo(uiScore1);
 
-	uiScore2 = new UiScore("Ui Score");
+	uiScore2 = new UiScore("Ui Score2");
 	uiScore2->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
 	uiScore2->SetPosition({ 1920.f * 0.5, 0 });
 	AddGo(uiScore2);
@@ -95,7 +95,7 @@ void SCENE_BATTLE::Init()
 
 
 	sf::Vector2f timeSize(400.f, 80.f);
-	float timeBarDuration = 3.f;
+	float timeBarDuration = 10.f;
 
 	timeBar = new UiTimeBar("Time Bar");
 	timeBar->timeBarSize = timeSize;
@@ -113,6 +113,15 @@ void SCENE_BATTLE::Init()
 	uiMsg->SetPosition({ 1920.f / 2, 1080.f / 2 });
 	uiMsg->SetOrigin(Origins::MC);
 	AddGo(uiMsg);
+
+
+	uiWinner = new TextGo("Center Message");
+	uiWinner->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"),
+		"Draw", 100, sf::Color::White);
+	uiWinner->SetPosition({ 1920.f / 2, 1080.f / 2 - 200 });
+	uiWinner->SetOrigin(Origins::MC);
+	AddGo(uiWinner);
+
 
 	for (GameObject* obj : gameObjects)
 	{
@@ -200,11 +209,13 @@ void SCENE_BATTLE::UpdateGame(float dt)
 	{
 		SetStatus(Status::GameOver);
 	}
+	OnPlayerDie();
 
 }
 
 void SCENE_BATTLE::UpdateGameOver(float dt)
 {
+	WinnerCheck();
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
@@ -233,11 +244,32 @@ void SCENE_BATTLE::OnChop()
 {
 	// 점수 갱신
 	uiScore1->AddScore(10);
+	uiScore2->AddScore2(10);
 }
 
 void SCENE_BATTLE::OnPlayerDie()
 {
-	SetStatus(Status::GameOver);
+	if (!(player1->IsAlive()) && !(player2->IsAlive()))
+	{
+		SetStatus(Status::GameOver);
+	}
+}
+
+
+void SCENE_BATTLE::WinnerCheck()
+{
+	if (uiScore1->GetScore() == uiScore2->GetScore())
+	{
+		uiWinner->SetString("Draw!");
+	}
+	else if (uiScore1->GetScore() > uiScore2->GetScore())
+	{
+		uiWinner->SetString("Winner is Player 1!");
+	}
+	else
+	{
+		uiWinner->SetString("Winner is Player 2!");
+	}
 }
 
 void SCENE_BATTLE::SetStatus(Status newStatus)
@@ -253,6 +285,7 @@ void SCENE_BATTLE::SetStatus(Status newStatus)
 		FRAMEWORK.SetTimeScale(0.f);
 		uiMsg->SetActive(true);
 		uiMsg->SetString("PRESS ENTER TO START!");
+		uiWinner->SetActive(false);
 		break;
 	case Status::Game:
 		if (prevStatus == Status::GameOver)
@@ -267,16 +300,19 @@ void SCENE_BATTLE::SetStatus(Status newStatus)
 		FRAMEWORK.SetTimeScale(1.f);
 		uiMsg->SetActive(false);
 		uiMsg->SetString("");
+		uiWinner->SetActive(false);
 		break;
 	case Status::GameOver:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiMsg->SetActive(true);
-		uiMsg->SetString("GAME OVER! PRESS ENTER TO RESTART!");
+		uiMsg->SetString("PRESS ENTER TO RESTART!");
+		uiWinner->SetActive(true);
 		break;
 	case Status::Pause:
 		FRAMEWORK.SetTimeScale(0.f);
 		uiMsg->SetActive(true);
 		uiMsg->SetString("PRESS ESC TO RESUME!");
+		uiWinner->SetActive(false);
 		break;
 	}
 }

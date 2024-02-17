@@ -30,3 +30,17 @@ void UiScore::AddScore(int addedScore)
 		SetScore(score);
 	}
 }
+
+void UiScore::AddScore2(int addedScore)
+{
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+	{
+		score += addedScore;
+		SetScore(score);
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+	{
+		score += addedScore;
+		SetScore(score);
+	}
+}
