@@ -8,6 +8,9 @@
 #include "Tree.h"
 #include "EffectLog.h"
 #include "Player.h"
+#include "Player1p.h"
+#include "Player2p.h"
+
 
 SCENE_BATTLE::SCENE_BATTLE(SceneIds id)
 	: Scene(id)
@@ -27,6 +30,7 @@ void SCENE_BATTLE::Init()
 	texResMgr.Load("graphics/branch.png");
 	texResMgr.Load("graphics/log.png");
 	texResMgr.Load("graphics/player.png");
+	texResMgr.Load("graphics/player2.png");
 	texResMgr.Load("graphics/axe.png");
 	texResMgr.Load("graphics/rip.png");
 
@@ -52,19 +56,19 @@ void SCENE_BATTLE::Init()
 		AddGo(newMovingGo);
 	}
 
-	tree = new Tree("Tree");
-	tree->SetPosition({ 1920.f / 2 + 400, 900.f });
-	AddGo(tree);
+	tree1 = new Tree("Tree1");
+	tree1->SetPosition({ 1920.f / 2 - 400, 900.f });
+	AddGo(tree1);
 
 	tree2 = new Tree("Tree2");
-	tree2->SetPosition({ 1920.f / 2 - 400, 900.f });
+	tree2->SetPosition({ 1920.f / 2 + 400, 900.f });
 	AddGo(tree2);
 
 
-	player = new Player("Player");
-	AddGo(player);
+	player1 = new Player1p("Player1");
+	AddGo(player1);
 
-	player2 = new Player("Player2");
+	player2 = new Player2p("Player2");
 	AddGo(player2);
 
 	BgBeeGo* beeGo = new BgBeeGo("Bee");
@@ -79,9 +83,14 @@ void SCENE_BATTLE::Init()
 	uiTimeBarPos.y *= 0.9f;
 
 	// UI OBJECTS
-	uiScore = new UiScore("Ui Score");
-	uiScore->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
-	AddGo(uiScore);
+	uiScore1 = new UiScore("Ui Score");
+	uiScore1->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
+	AddGo(uiScore1);
+
+	uiScore2 = new UiScore("Ui Score");
+	uiScore2->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"), "", 40, sf::Color::White);
+	uiScore2->SetPosition({ 1920.f * 0.5, 0 });
+	AddGo(uiScore2);
 
 
 
@@ -96,7 +105,6 @@ void SCENE_BATTLE::Init()
 	timeBar->SetPosition({ 1920 / 2 - 200, 1080 - 100 });
 	timeBar->SetColor(sf::Color::Red);
 	timeBar->SetValue(timeBar->timeBarCurrSize.x);
-
 	AddGo(timeBar);
 
 	uiMsg = new TextGo("Center Message");
@@ -116,13 +124,14 @@ void SCENE_BATTLE::Release()
 {
 	Scene::Release();
 
-	uiScore = nullptr;
+	uiScore1 = nullptr;
+	uiScore2 = nullptr;
 	uiMsg = nullptr;
 }
 
 void SCENE_BATTLE::Enter()
 {
-	player->SetPosition(tree->GetPosition());
+	player1->SetPosition(tree1->GetPosition());
 	player2->SetPosition(tree2->GetPosition());
 
 	Scene::Enter();
@@ -170,7 +179,7 @@ void SCENE_BATTLE::UpdateGame(float dt)
 	{
 		SetStatus(Status::Pause);
 	}
-	timeBar->AddTime(50);
+	//timeBar->AddTime(50);
 
 	auto it = useEffectList.begin();
 	while (it != useEffectList.end())
@@ -199,7 +208,8 @@ void SCENE_BATTLE::UpdateGameOver(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		SetStatus(Status::Game);
-		uiScore->Reset();
+		uiScore1->Reset();
+		uiScore2->Reset();
 		timeBar->Reset();
 	}
 
@@ -222,7 +232,7 @@ void SCENE_BATTLE::Draw(sf::RenderWindow& window)
 void SCENE_BATTLE::OnChop()
 {
 	// 점수 갱신
-	uiScore->AddScore(10);
+	uiScore1->AddScore(10);
 }
 
 void SCENE_BATTLE::OnPlayerDie()
@@ -249,8 +259,8 @@ void SCENE_BATTLE::SetStatus(Status newStatus)
 		{
 			timer = duration;
 			timeBar->SetValue(timer / duration);
-			player->Reset();
-			tree->Reset();
+			player1->Reset();
+			tree1->Reset();
 			player2->Reset();
 			tree2->Reset();
 		}
@@ -289,7 +299,8 @@ void SCENE_BATTLE::PlayEffectLog(Sides side)
 
 	effectLog->SetActive(true);
 	effectLog->Reset();
-	effectLog->SetPosition(tree->GetPosition());
+	effectLog->SetPosition(tree1->GetPosition());
+	effectLog->SetPosition(tree2->GetPosition());
 
 	sf::Vector2f velocity(1000.f, -1000.f);
 	if (side == Sides::RIGHT)

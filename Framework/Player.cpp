@@ -114,77 +114,63 @@ void Player::Reset()
 {
 	SpriteGo::Reset();
 
-	SetTexture(texIdPlayer); 
+	SetTexture(texIdPlayer);
 	isAlive = true;
 	isChopping = false;
 
-
 	sceneGame = dynamic_cast<SCENE_GAME*>(SCENE_MGR.GetCurrentScene());
 	tree = dynamic_cast<Tree*>(sceneGame->FindGo("Tree"));
-	
 
 	SetSide(Sides::RIGHT);
 }
 
-void Player::MultiInput()
+void Player::Update(float dt)
 {
+	if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
+		return;
+
 	Sides inputSide = Sides::NONE;
 
-	if (sceneGame->GetStatus() == SCENE_GAME::Status::Game)
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
 	{
-		if (InputMgr::GetKeyDown(sf::Keyboard::Left))
-		{
-			inputSide = Sides::LEFT;
-		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Right))
-		{
-			inputSide = Sides::RIGHT;
-		}
-
-		if (inputSide != Sides::NONE)
-		{
-			isChopping = true;
-			sfxChop.play();
-
-			Sides branchSide = tree->Chop(inputSide);
-
-
-
-			SetSide(inputSide);
-
-			if (side != branchSide)
-			{
-				sceneGame->OnChop();
-			}
-			else
-			{
-				sceneGame->OnPlayerDie();
-				OnDie();
-				sfxDeath.play();
-			}
-			if (sceneGame->GetStatus() != SCENE_GAME::Status::GameOver)
-			{
-				sceneGame->PlayEffectLog(inputSide);
-			}
-		}
+		inputSide = Sides::LEFT;
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+	{
+		inputSide = Sides::RIGHT;
 	}
 
+	if (inputSide != Sides::NONE)
+	{
+		isChopping = true;
+		sfxChop.play();
 
+		Sides branchSide = tree->Chop(inputSide);
+		
+
+	
+		SetSide(inputSide);
+
+		if (side != branchSide)
+		{
+			sceneGame->OnChop();
+		}
+		else
+		{
+			sceneGame->OnPlayerDie();
+			OnDie();
+			sfxDeath.play();
+		}
+		if (sceneGame->GetStatus() != SCENE_GAME::Status::GameOver)
+		{
+			sceneGame->PlayEffectLog(inputSide);
+		}
+	}
 
 	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Right))
 	{
 		isChopping = false;
 	}
-}
-
-void Player::Update(float dt)
-{
-
-	if (sceneGame->GetStatus() != SCENE_GAME::Status::Game)
-		return;
-
-	MultiInput();
-
 }
 
 void Player::Draw(sf::RenderWindow& window)

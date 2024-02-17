@@ -6,7 +6,8 @@ class TextGo;
 class UiTimeBar;
 class Tree;
 class EffectLog;
-class Player;
+class Player1p;
+class Player2p;
 
 class SCENE_BATTLE : public Scene
 {
@@ -20,14 +21,15 @@ public:
 	};
 
 protected:
-	UiScore* uiScore = nullptr;
+	UiScore* uiScore1 = nullptr;
+	UiScore* uiScore2 = nullptr;
 	TextGo* uiMsg = nullptr;
 	UiTimeBar* timeBar = nullptr;
 
-	Tree* tree = nullptr;
+	Tree* tree1 = nullptr;
 	Tree* tree2 = nullptr;
-	Player* player = nullptr;
-	Player* player2 = nullptr;
+	Player1p* player1 = nullptr;
+	Player2p* player2 = nullptr;
 
 	std::list<EffectLog*> useEffectList;
 	std::list<EffectLog*> unuseEffectList;

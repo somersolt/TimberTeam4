@@ -6,7 +6,7 @@ class Tree;
 
 class Player : public SpriteGo
 {
-protected:s
+protected:
 	sf::Sound sfxChop;
 	sf::Sound sfxDeath;
 
@@ -29,7 +29,6 @@ public:
 	virtual ~Player() = default;
 
 	std::string texIdPlayer = "graphics/player.png";
-
 	std::string texIdAxe = "graphics/axe.png";
 	std::string texIdRip = "graphics/rip.png";
 	
@@ -37,7 +36,6 @@ public:
 	Sides GetSide() const { return side; }
 	void SetSide(Sides s);
 	void OnDie();
-	void MultiInput();
 
 	virtual void SetPosition(const sf::Vector2f& pos);
 	virtual void SetScale(const sf::Vector2f& scale);
@@ -46,7 +44,6 @@ public:
 	virtual void Release();
 
 	virtual void Reset();
-
 
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);

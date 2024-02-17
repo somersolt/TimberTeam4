@@ -19,12 +19,12 @@ void UiScore::SetScore(int score)
 
 void UiScore::AddScore(int addedScore)
 {
-	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+	if (InputMgr::GetKeyDown(sf::Keyboard::A))
 	{
 		score += addedScore;
 		SetScore(score);
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+	if (InputMgr::GetKeyDown(sf::Keyboard::D))
 	{
 		score += addedScore;
 		SetScore(score);
