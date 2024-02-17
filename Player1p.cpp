@@ -51,16 +51,17 @@ void Player1p::Update(float dt)
 		return;
 
 	Sides inputSide = Sides::NONE;
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::A))
+	if (isAlive)
 	{
-		inputSide = Sides::LEFT;
+		if (InputMgr::GetKeyDown(sf::Keyboard::A))
+		{
+			inputSide = Sides::LEFT;
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::D))
+		{
+			inputSide = Sides::RIGHT;
+		}
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::D))
-	{
-		inputSide = Sides::RIGHT;
-	}
-
 	if (inputSide != Sides::NONE)
 	{
 		isChopping = true;
