@@ -178,7 +178,11 @@ void SCENE_GAME::UpdateGame(float dt)
 			++it;
 		}
 	}
-	
+
+	if (timeBar->timeBarCurrSize.x == 0)
+	{
+		SetStatus(Status::GameOver);
+	}
 }
 
 void SCENE_GAME::UpdateGameOver(float dt)
