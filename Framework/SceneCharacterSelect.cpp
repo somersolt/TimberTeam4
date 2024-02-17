@@ -91,12 +91,12 @@ void SceneCharacterSelect::Enter()
 void SceneCharacterSelect::Exit()
 {
 	std::string player1Id = "graphics/player" + std::to_string(selectNumP1) + ".png";
-	SCENE_MGR.Instance().SetPlayerId(Players::P1, player1Id);
+	SCENE_MGR.SetPlayerId(Players::P1, player1Id);
 
 	if (mode == Modes::MULTI)
 	{
 		std::string player2Id = "graphics/player" + std::to_string(selectNumP2) + ".png";
-		SCENE_MGR.Instance().SetPlayerId(Players::P2, player2Id);
+		SCENE_MGR.SetPlayerId(Players::P2, player2Id);
 	}
 }
 
