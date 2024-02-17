@@ -85,7 +85,7 @@ void SceneCharacterSelect::Enter()
 {
 	Scene::Enter();
 
-	mode = SCENE_MGR.Instance().GetMode();
+	mode = SCENE_MGR.GetMode();
 }
 
 void SceneCharacterSelect::Exit()
@@ -151,7 +151,7 @@ void SceneCharacterSelect::Update(float dt)
 		{
 			if (mode == Modes::SINGLE)
 			{
-				SCENE_MGR.Instance().ChangeScene(SceneIds::SCENE_GAME);
+				SCENE_MGR.ChangeScene(SceneIds::SCENE_GAME);
 			}
 			else
 			{
