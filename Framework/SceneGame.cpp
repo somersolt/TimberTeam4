@@ -178,7 +178,14 @@ void SCENE_GAME::UpdateGame(float dt)
 			++it;
 		}
 	}
-	
+
+	if (timeBar->timeBarCurrSize.x == 0)
+	{
+		SetStatus(Status::GameOver);
+		GameObject* findPlayer = FindGo("Player");
+		dynamic_cast<Player*>(findPlayer)->Player::OnDie();
+		sfxTimeOver.play();
+	}
 }
 
 void SCENE_GAME::UpdateGameOver(float dt)
@@ -237,6 +244,7 @@ void SCENE_GAME::SetStatus(Status newStatus)
 			timeBar->SetValue(timer / duration);
 			player->Reset();
 			tree->Reset();
+			timeBar->Reset();
 		}
 		FRAMEWORK.SetTimeScale(1.f);
 		uiMsg->SetActive(false);

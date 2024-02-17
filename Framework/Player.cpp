@@ -146,7 +146,9 @@ void Player::Update(float dt)
 		sfxChop.play();
 
 		Sides branchSide = tree->Chop(inputSide);
-		sceneGame->PlayEffectLog(inputSide);
+		
+
+	
 		SetSide(inputSide);
 
 		if (side != branchSide)
@@ -159,9 +161,13 @@ void Player::Update(float dt)
 			OnDie();
 			sfxDeath.play();
 		}
+		if (sceneGame->GetStatus() != SCENE_GAME::Status::GameOver)
+		{
+			sceneGame->PlayEffectLog(inputSide);
+		}
 	}
 
-	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Left))
+	if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Right))
 	{
 		isChopping = false;
 	}
