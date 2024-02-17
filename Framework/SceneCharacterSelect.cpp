@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneCharacterSelect.h"
 #include "SpriteGo.h"
+#include "TextGo.h"
 
 SceneCharacterSelect::SceneCharacterSelect(SceneIds id) : Scene(id)
 {
@@ -8,12 +9,16 @@ SceneCharacterSelect::SceneCharacterSelect(SceneIds id) : Scene(id)
 
 SceneCharacterSelect::~SceneCharacterSelect()
 {
+	Release();
 }
 
 void SceneCharacterSelect::Init()
 {
 	texResMgr.Load("graphics/player_select_bg.png");
-	texResMgr.Load("graphics/bee.png");
+	texResMgr.Load("graphics/marker1.png");
+	texResMgr.Load("graphics/marker2.png");
+
+	fontResMgr.Load("fonts/KOMIKAP_.ttf");
 
 
 
@@ -37,44 +42,121 @@ void SceneCharacterSelect::Init()
 
 
 
-	currentSelectNum = 1;
-	selectSprite = new SpriteGo("Select Marker");
-	selectSprite->SetTexture("graphics/bee.png");
-	selectSprite->SetOrigin(Origins::BC);
-	selectSprite->SetPosition({ characterInterval, FRAMEWORK.GetWindowSize().y / 2.f - 150.f});
-	AddGo(selectSprite);
+	isP2Turn = false;
+
+	selectNumP1 = 1;
+	selectMarkerP1 = new SpriteGo("Select Marker1");
+	selectMarkerP1->SetTexture("graphics/marker1.png");
+	selectMarkerP1->SetOrigin(Origins::BC);
+	selectMarkerP1->SetPosition({ characterInterval,
+		FRAMEWORK.GetWindowSize().y / 2.f - 150.f});
+	AddGo(selectMarkerP1);
+
+	selectMarkerP2 = new SpriteGo("Select Marker2");
+	selectMarkerP2->SetTexture("graphics/marker2.png");
+	selectMarkerP2->SetOrigin(Origins::BC);
+	selectMarkerP2->SetPosition({ characterInterval,
+		FRAMEWORK.GetWindowSize().y / 2.f - 150.f });
+	selectMarkerP2->SetActive(false);
+	AddGo(selectMarkerP2);
+
+
+
+	selectMessage = new TextGo("Select Message");
+	selectMessage->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"),
+		"Player1: Select a Character!", 75, sf::Color::Red);
+	selectMessage->SetOrigin(Origins::BC);
+	selectMessage->SetPosition({ FRAMEWORK.GetWindowSize().x / 2.f,
+		FRAMEWORK.GetWindowSize().y / 2.f - 300.f });
+	AddGo(selectMessage);
 }
 
 void SceneCharacterSelect::Release()
 {
 	Scene::Release();
+
+	selectMarkerP1 = nullptr;
+	selectMarkerP2 = nullptr;
+
+	selectMessage = nullptr;
 }
 
 void SceneCharacterSelect::Enter()
 {
 	Scene::Enter();
+
+	mode = SCENE_MGR.Instance().GetMode();
 }
 
 void SceneCharacterSelect::Exit()
 {
+	std::string player1Id = "graphics/player" + std::to_string(selectNumP1) + ".png";
+	SCENE_MGR.Instance().SetPlayerId(Players::P1, player1Id);
+
+	if (mode == Modes::MULTI)
+	{
+		std::string player2Id = "graphics/player" + std::to_string(selectNumP2) + ".png";
+		SCENE_MGR.Instance().SetPlayerId(Players::P2, player2Id);
+	}
 }
 
 void SceneCharacterSelect::Update(float dt)
 {
+	Sides markerDir = Sides::NONE;
 	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
 	{
-		if (currentSelectNum != characterNumber)
-		{
-			selectSprite->SetPosition(selectSprite->GetPosition() + sf::Vector2f(characterInterval, 0.f));
-			currentSelectNum++;
-		}
+		markerDir = Sides::RIGHT;
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
 	{
-		if (currentSelectNum != 1)
+		markerDir = Sides::LEFT;
+	}
+
+	if (markerDir != Sides::NONE)
+	{
+		if (!isP2Turn)
 		{
-			selectSprite->SetPosition(selectSprite->GetPosition() - sf::Vector2f(characterInterval, 0.f));
-			currentSelectNum--;
+			MoveSelectMarker(selectMarkerP1, selectNumP1, markerDir);
+		}
+		else
+		{
+			MoveSelectMarker(selectMarkerP2, selectNumP2, markerDir);
+		}
+	}
+	
+
+
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		if (mode == Modes::MULTI && !isP2Turn)
+		{
+			isP2Turn = true;
+			selectMarkerP1->SetActive(false);
+			selectMarkerP2->SetActive(true);
+			selectNumP2 = 1;
+			if (selectNumP2 == selectNumP1)
+			{
+				sf::Vector2f newMarkerPos = selectMarkerP2->GetPosition();
+				newMarkerPos += sf::Vector2f(characterInterval, 0.f);
+				selectMarkerP2->SetPosition(newMarkerPos);
+				selectNumP2++;
+			}
+
+			selectMessage->Set(fontResMgr.Get("fonts/KOMIKAP_.ttf"),
+				"Player2: Select a Character!", 75, sf::Color::Blue);
+			selectMessage->SetOrigin(Origins::BC);
+		}
+		else
+		{
+			if (mode == Modes::SINGLE)
+			{
+				SCENE_MGR.Instance().ChangeScene(SceneIds::SCENE_GAME);
+			}
+			else
+			{
+				// TO-DO: 배틀 씬으로 전환
+			}
 		}
 	}
 }
@@ -84,7 +166,18 @@ void SceneCharacterSelect::Draw(sf::RenderWindow& window)
 	Scene::Draw(window);
 }
 
-//void SceneCharacterSelect::SetMode(Modes mode)
-//{
-//	this->mode = mode;
-//}
+void SceneCharacterSelect::MoveSelectMarker(SpriteGo* selectMarker, int& selectNum, Sides markerDir)
+{
+	sf::Vector2f newMarkerPos = selectMarker->GetPosition();
+	if (markerDir == Sides::RIGHT && selectNum != characterNumber)
+	{
+		newMarkerPos += sf::Vector2f(characterInterval, 0.f);
+		selectNum++;
+	}
+	if (markerDir == Sides::LEFT && selectNum != 1)
+	{
+		newMarkerPos -= sf::Vector2f(characterInterval, 0.f);
+		selectNum--;
+	}
+	selectMarker->SetPosition(newMarkerPos);
+}

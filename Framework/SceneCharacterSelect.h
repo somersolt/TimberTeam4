@@ -2,17 +2,23 @@
 #include "Scene.h"
 
 class SpriteGo;
+class TextGo;
 
 class SceneCharacterSelect : public Scene
 {
 protected:
-	// Modes mode = Modes::SINGLE;
+	Modes mode = Modes::SINGLE;
 
-	int characterNumber = 3;
+	int characterNumber = 5;
 	float characterInterval = 0.f;
 
-	int currentSelectNum = 0;
-	SpriteGo* selectSprite = nullptr;
+	bool isP2Turn = false;
+	int selectNumP1 = 0;
+	int selectNumP2 = 0;
+	SpriteGo* selectMarkerP1 = nullptr;
+	SpriteGo* selectMarkerP2 = nullptr;
+
+	TextGo* selectMessage = nullptr;
 
 public:
 	SceneCharacterSelect(SceneIds id);
@@ -28,5 +34,5 @@ public:
 
 	void Draw(sf::RenderWindow& window) override;
 
-	// void SetMode(Modes mode);
+	void MoveSelectMarker(SpriteGo* selectMarker, int& selectNum, Sides markerDir);
 };

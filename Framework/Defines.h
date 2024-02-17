@@ -16,3 +16,13 @@ enum class SceneIds
 {
 	NONE = -1, SCENE_DEV1, SCENE_DEV2, SCENE_GAME, COUNT,
 };
+
+enum class Modes
+{
+	NONE = -1, SINGLE, MULTI, COUNT
+};
+
+enum class Players
+{
+	NONE = -1, P1, P2, COUNT
+};

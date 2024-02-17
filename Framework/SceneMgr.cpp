@@ -2,6 +2,7 @@
 #include "SceneMgr.h"
 #include "SceneDev1.h"
 #include "SceneDev2.h"
+#include "SceneCharacterSelect.h"
 #include "SceneGame.h"
 
 SceneMgr::~SceneMgr()
@@ -53,4 +54,39 @@ void SceneMgr::Update(float dt)
 void SceneMgr::Draw(sf::RenderWindow& window)
 {
 	scenes[(int)currentScene]->Draw(window);
+}
+
+void SceneMgr::SetPlayerId(Players player, std::string playerId)
+{
+	switch (player)
+	{
+	case Players::P1:
+		player1Id = playerId;
+		break;
+	case Players::P2:
+		player2Id = playerId;
+		break;
+	default:
+		break;
+	}
+}
+
+std::string SceneMgr::GetPlayerId(Players player) const
+{
+	switch (player)
+	{
+	case Players::P1:
+		return player1Id;
+		break;
+	case Players::P2:
+		return player2Id;
+		break;
+	default:
+		break;
+	}
+}
+
+void SceneMgr::SetMode(const Modes mode)
+{
+	this->mode = mode;
 }
