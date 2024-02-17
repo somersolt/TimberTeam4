@@ -212,7 +212,7 @@ void SCENE_GAME::Draw(sf::RenderWindow& window)
 void SCENE_GAME::OnChop()
 {
 	// 점수 갱신
-	uiScore->AddScore(10);
+	uiScore->AddScore2(10);
 }
 
 void SCENE_GAME::OnPlayerDie()
