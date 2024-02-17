@@ -13,6 +13,11 @@ protected:
 	SceneIds startScene = SceneIds::SCENE_TITLE;
 	SceneIds currentScene = startScene;
 
+	std::string player1Id = "";
+	std::string player2Id = "";
+
+	Modes mode = Modes::SINGLE;
+
 	SceneMgr() = default;
 	virtual ~SceneMgr();
 
@@ -27,6 +32,11 @@ public:
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
 
+	void SetPlayerId(Players player, std::string playerId);
+	std::string GetPlayerId(Players player) const;
+
+	void SetMode(const Modes mode);
+	Modes GetMode() const { return mode; }
 
 	SceneMgr(const SceneMgr&) = delete;
 	SceneMgr(SceneMgr&&) = delete;
