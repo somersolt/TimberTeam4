@@ -14,11 +14,6 @@ SceneCharacterSelect::~SceneCharacterSelect()
 
 void SceneCharacterSelect::Init()
 {
-	texResMgr.Load("graphics/player_select_bg.png");
-	texResMgr.Load("graphics/marker1.png");
-	texResMgr.Load("graphics/marker2.png");
-
-	fontResMgr.Load("fonts/KOMIKAP_.ttf");
 
 
 
@@ -85,7 +80,6 @@ void SceneCharacterSelect::Enter()
 {
 	Scene::Enter();
 
-	mode = SCENE_MGR.GetMode();
 }
 
 void SceneCharacterSelect::Exit()
@@ -93,7 +87,7 @@ void SceneCharacterSelect::Exit()
 	std::string player1Id = "graphics/player" + std::to_string(selectNumP1) + ".png";
 	SCENE_MGR.SetPlayerId(Players::P1, player1Id);
 
-	if (mode == Modes::MULTI)
+	if (SCENE_MGR.GetMode() == Modes::MULTI)
 	{
 		std::string player2Id = "graphics/player" + std::to_string(selectNumP2) + ".png";
 		SCENE_MGR.SetPlayerId(Players::P2, player2Id);
@@ -129,7 +123,7 @@ void SceneCharacterSelect::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
-		if (mode == Modes::MULTI && !isP2Turn)
+		if (SCENE_MGR.GetMode() == Modes::MULTI && !isP2Turn)
 		{
 			isP2Turn = true;
 			selectMarkerP1->SetActive(false);
@@ -149,13 +143,13 @@ void SceneCharacterSelect::Update(float dt)
 		}
 		else
 		{
-			if (mode == Modes::SINGLE)
+			if (SCENE_MGR.GetMode() == Modes::SINGLE)
 			{
 				SCENE_MGR.ChangeScene(SceneIds::SCENE_GAME);
 			}
-			else
+			else if(SCENE_MGR.GetMode() == Modes::MULTI)
 			{
-				// TO-DO: 배틀 씬으로 전환
+				SCENE_MGR.ChangeScene(SceneIds::SCENE_BATTLE);
 			}
 		}
 	}

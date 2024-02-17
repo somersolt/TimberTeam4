@@ -16,7 +16,7 @@ protected:
 	std::string player1Id = "";
 	std::string player2Id = "";
 
-	Modes mode = Modes::SINGLE;
+	Modes mode = Modes::NONE;
 
 	SceneMgr() = default;
 	virtual ~SceneMgr();

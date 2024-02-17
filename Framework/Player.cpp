@@ -113,7 +113,7 @@ void Player::Release()
 void Player::Reset()
 {
 	SpriteGo::Reset();
-
+	texIdPlayer = SCENE_MGR.GetPlayerId(Players::P1);
 	SetTexture(texIdPlayer);
 	isAlive = true;
 	isChopping = false;

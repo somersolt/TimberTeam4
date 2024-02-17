@@ -14,7 +14,7 @@ public:
     Player1p(const std::string& name = "");
     virtual ~Player1p() = default;
 
-    std::string texIdPlayer1p = "graphics/player.png";
+    std::string texIdPlayer1p = "graphics/player1.png";
 
 	//void SetPosition(const sf::Vector2f& pos) override;
 	//void SetScale(const sf::Vector2f& scale) override;

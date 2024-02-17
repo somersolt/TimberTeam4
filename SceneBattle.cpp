@@ -23,18 +23,6 @@ SCENE_BATTLE::~SCENE_BATTLE()
 
 void SCENE_BATTLE::Init()
 {
-	texResMgr.Load("graphics/background.png");
-	texResMgr.Load("graphics/cloud.png");
-	texResMgr.Load("graphics/bee.png");
-	texResMgr.Load("graphics/tree.png");
-	texResMgr.Load("graphics/branch.png");
-	texResMgr.Load("graphics/log.png");
-	texResMgr.Load("graphics/player.png");
-	texResMgr.Load("graphics/player2.png");
-	texResMgr.Load("graphics/axe.png");
-	texResMgr.Load("graphics/rip.png");
-
-	fontResMgr.Load("fonts/KOMIKAP_.ttf");
 
 	soundResMgr.Load("sound/out_of_time.wav");
 	sfxTimeOver.setBuffer(RES_MGR_SOUND_BUFFER.Get("sound/out_of_time.wav"));

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SceneMgr.h"
-#include "SceneDev1.h"
-#include "SceneDev2.h"
+#include "SceneTitle.h"
+#include "SceneModeSelect.h"
 #include "SceneCharacterSelect.h"
 #include "SceneGame.h"
 #include "SceneBattle.h"
@@ -17,7 +17,8 @@ void SceneMgr::Init()
 	Release();
 
 	scenes.push_back(new SCENE_TITLE(SceneIds::SCENE_TITLE));
-	scenes.push_back(new SCENE_MOD_SELECT(SceneIds::SCENE_MOD_SELECT));
+	scenes.push_back(new SCENE_MODE_SELECT(SceneIds::SCENE_MODE_SELECT));
+	scenes.push_back(new SceneCharacterSelect(SceneIds::SCENE_CHARACTER_SELECT));
 	scenes.push_back(new SCENE_GAME(SceneIds::SCENE_GAME));
 	scenes.push_back(new SCENE_BATTLE(SceneIds::SCENE_BATTLE));
 

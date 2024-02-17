@@ -14,11 +14,26 @@ SCENE_TITLE::~SCENE_TITLE()
 
 void SCENE_TITLE::Init()
 {
+	texResMgr.Load("graphics/background.png");
+	texResMgr.Load("graphics/player_select_bg.png");
 	texResMgr.Load("graphics/title.png");
+
+	texResMgr.Load("graphics/cloud.png");
+	texResMgr.Load("graphics/bee.png");
+	texResMgr.Load("graphics/tree.png");
+	texResMgr.Load("graphics/branch.png");
+	texResMgr.Load("graphics/log.png");
+
+	//texResMgr.Load("graphics/player.png");
+	//texResMgr.Load("graphics/player2.png");
+
+	texResMgr.Load("graphics/axe.png");
+	texResMgr.Load("graphics/rip.png");
+
 	fontResMgr.Load("fonts/KOMIKAP_.ttf");
 
-	SpriteGo* title = new SpriteGo("title");
 
+	SpriteGo* title = new SpriteGo("title");
 	title->SetTexture("graphics/title.png");
 	AddGo(title);
 
@@ -65,7 +80,7 @@ void SCENE_TITLE::Update(float dt)
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
-		SceneMgr::Instance().ChangeScene(SceneIds::SCENE_GAME);
+		SceneMgr::Instance().ChangeScene(SceneIds::SCENE_MODE_SELECT);
 	}
 
 	//if (InputMgr::GetKeyDown(sf::Keyboard::Enter))

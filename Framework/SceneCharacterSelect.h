@@ -7,7 +7,6 @@ class TextGo;
 class SceneCharacterSelect : public Scene
 {
 protected:
-	Modes mode = Modes::SINGLE;
 
 	int characterNumber = 5;
 	float characterInterval = 0.f;

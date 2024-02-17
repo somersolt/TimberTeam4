@@ -28,7 +28,8 @@ public:
 	Player(const std::string& name = "");
 	virtual ~Player() = default;
 
-	std::string texIdPlayer = "graphics/player.png";
+	std::string texIdPlayer = "graphics/player1.png";
+
 	std::string texIdAxe = "graphics/axe.png";
 	std::string texIdRip = "graphics/rip.png";
 	
