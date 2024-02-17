@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "SceneModSelect.h"
+#include "SpriteGo.h"
+#include "TextGo.h"
 
 SCENE_MOD_SELECT::SCENE_MOD_SELECT(SceneIds id) : Scene(id)
 {
@@ -11,6 +13,12 @@ SCENE_MOD_SELECT::~SCENE_MOD_SELECT()
 
 void SCENE_MOD_SELECT::Init()
 {
+	texResMgr.Load("graphics/BgModeSelect.png");
+	SpriteGo* BgModeSelect = new SpriteGo("BgModeSelect");
+	AddGo(BgModeSelect);
+
+	
+
 }
 
 void SCENE_MOD_SELECT::Release()
