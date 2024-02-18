@@ -7,15 +7,19 @@ class TextGo;
 class SceneCharacterSelect : public Scene
 {
 protected:
+	const int characterNumber = 12;
+	const int characterRowNum = 4;
+	const int characterColNum = 3;
 
-	int characterNumber = 5;
-	float characterInterval = 0.f;
+	float characterIntervalX = 0.f;
+	float characterIntervalY = 0.f;
 
 	bool isP2Turn = false;
 	int selectNumP1 = 0;
 	int selectNumP2 = 0;
 	SpriteGo* selectMarkerP1 = nullptr;
 	SpriteGo* selectMarkerP2 = nullptr;
+	float markerInterval = 100.f;
 
 	TextGo* selectMessage = nullptr;
 

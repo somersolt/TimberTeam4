@@ -9,7 +9,7 @@ enum class Origins
 
 enum class Sides
 {
-	NONE = -1, LEFT, RIGHT, COUNT
+	NONE = -1, LEFT, RIGHT, UP, DOWN, COUNT
 };
 
 enum class SceneIds

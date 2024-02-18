@@ -23,7 +23,8 @@ void SceneCharacterSelect::Init()
 
 
 
-	characterInterval = FRAMEWORK.GetWindowSize().x / (characterNumber + 1);
+	characterIntervalX = FRAMEWORK.GetWindowSize().x / (characterRowNum + 1);
+	characterIntervalY = FRAMEWORK.GetWindowSize().y / (characterColNum + 1);
 	for (int i = 1; i <= characterNumber; i++)
 	{
 		std::string playerId = "graphics/player" + std::to_string(i) + ".png";
@@ -31,7 +32,8 @@ void SceneCharacterSelect::Init()
 		SpriteGo* player = new SpriteGo("Player" + std::to_string(i));
 		player->SetTexture(playerId);
 		player->SetOrigin(Origins::MC);
-		player->SetPosition({ characterInterval * i, FRAMEWORK.GetWindowSize().y / 2.f });
+		player->SetPosition({ characterIntervalX * ((i - 1) % characterRowNum + 1),
+			characterIntervalY * ((i - 1) / characterRowNum + 1)});
 		AddGo(player);
 	}
 
@@ -43,15 +45,15 @@ void SceneCharacterSelect::Init()
 	selectMarkerP1 = new SpriteGo("Select Marker1");
 	selectMarkerP1->SetTexture("graphics/marker1.png");
 	selectMarkerP1->SetOrigin(Origins::BC);
-	selectMarkerP1->SetPosition({ characterInterval,
-		FRAMEWORK.GetWindowSize().y / 2.f - 150.f});
+	selectMarkerP1->SetPosition({ characterIntervalX,
+		characterIntervalY - markerInterval });
 	AddGo(selectMarkerP1);
 
 	selectMarkerP2 = new SpriteGo("Select Marker2");
 	selectMarkerP2->SetTexture("graphics/marker2.png");
 	selectMarkerP2->SetOrigin(Origins::BC);
-	selectMarkerP2->SetPosition({ characterInterval,
-		FRAMEWORK.GetWindowSize().y / 2.f - 150.f });
+	selectMarkerP2->SetPosition({ characterIntervalX,
+		characterIntervalY - markerInterval });
 	selectMarkerP2->SetActive(false);
 	AddGo(selectMarkerP2);
 
@@ -62,7 +64,7 @@ void SceneCharacterSelect::Init()
 		"Player1: Select a Character!", 75, sf::Color::Red);
 	selectMessage->SetOrigin(Origins::BC);
 	selectMessage->SetPosition({ FRAMEWORK.GetWindowSize().x / 2.f,
-		FRAMEWORK.GetWindowSize().y / 2.f - 300.f });
+		FRAMEWORK.GetWindowSize().y / 2.f - 450.f });
 	AddGo(selectMessage);
 }
 
@@ -105,6 +107,14 @@ void SceneCharacterSelect::Update(float dt)
 	{
 		markerDir = Sides::LEFT;
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Up))
+	{
+		markerDir = Sides::UP;
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Down))
+	{
+		markerDir = Sides::DOWN;
+	}
 
 	if (markerDir != Sides::NONE)
 	{
@@ -132,7 +142,7 @@ void SceneCharacterSelect::Update(float dt)
 			if (selectNumP2 == selectNumP1)
 			{
 				sf::Vector2f newMarkerPos = selectMarkerP2->GetPosition();
-				newMarkerPos += sf::Vector2f(characterInterval, 0.f);
+				newMarkerPos += sf::Vector2f(characterIntervalX, 0.f);
 				selectMarkerP2->SetPosition(newMarkerPos);
 				selectNumP2++;
 			}
@@ -162,16 +172,23 @@ void SceneCharacterSelect::Draw(sf::RenderWindow& window)
 
 void SceneCharacterSelect::MoveSelectMarker(SpriteGo* selectMarker, int& selectNum, Sides markerDir)
 {
-	sf::Vector2f newMarkerPos = selectMarker->GetPosition();
 	if (markerDir == Sides::RIGHT && selectNum != characterNumber)
 	{
-		newMarkerPos += sf::Vector2f(characterInterval, 0.f);
 		selectNum++;
 	}
 	if (markerDir == Sides::LEFT && selectNum != 1)
 	{
-		newMarkerPos -= sf::Vector2f(characterInterval, 0.f);
 		selectNum--;
 	}
+	if (markerDir == Sides::UP && (selectNum - 1) / characterRowNum != 0)
+	{
+		selectNum -= characterRowNum;
+	}
+	if (markerDir == Sides::DOWN && (selectNum - 1) / characterRowNum != characterColNum - 1)
+	{
+		selectNum += characterRowNum;
+	}
+	sf::Vector2f newMarkerPos = { characterIntervalX * ((selectNum - 1) % characterRowNum + 1),
+			characterIntervalY * ((selectNum - 1) / characterRowNum + 1) - markerInterval };
 	selectMarker->SetPosition(newMarkerPos);
 }
