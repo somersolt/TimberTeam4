@@ -57,6 +57,7 @@ void SCENE_MODE_SELECT::Release()
 
 void SCENE_MODE_SELECT::Enter()
 {
+	SelectMode = Modes::SINGLE;
 }
 
 void SCENE_MODE_SELECT::Exit()
