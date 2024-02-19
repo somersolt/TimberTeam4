@@ -7,9 +7,9 @@ class TextGo;
 class SceneCharacterSelect : public Scene
 {
 protected:
-	const int characterNumber = 12;
+	const int characterNumber = 16;
 	const int characterRowNum = 4;
-	const int characterColNum = 3;
+	const int characterColNum = 4;
 
 	float characterIntervalX = 0.f;
 	float characterIntervalY = 0.f;
